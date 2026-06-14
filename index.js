@@ -7,16 +7,10 @@ app.use(cors());
 
 app.get("/klines", async (req, res) => {
   try {
-    const symbol = req.query.symbol || "BTCUSDT";
-    const interval = req.query.interval || "15";
-    const limit = req.query.limit || "200";
-    
-    const r = await axios.get("https://min-api.cryptocompare.com/data/v2/histominute", {
+    const r = await axios.get("https://api.coingecko.com/api/v3/coins/bitcoin/ohlc", {
       params: {
-        fsym: "BTC",
-        tsym: "USDT",
-        limit: limit,
-        aggregate: interval
+        vs_currency: "usd",
+        days: "1"
       }
     });
     res.json(r.data);
