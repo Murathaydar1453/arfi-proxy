@@ -11,7 +11,7 @@ app.get("/klines", async (req, res) => {
     const interval = req.query.interval || "15m";
     const limit = req.query.limit || "200";
     const tf = String(interval).match(/^\d+$/) ? interval + "m" : interval;
-    const r = await axios.get("https://fapi.binance.com/fapi/v1/klines", {
+const r = await axios.get("https://api.binance.com/api/v3/klines", {
       params: { symbol, interval: tf, limit }
     });
     res.json(r.data);
