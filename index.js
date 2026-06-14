@@ -8,11 +8,16 @@ app.use(cors());
 app.get("/klines", async (req, res) => {
   try {
     const symbol = req.query.symbol || "BTCUSDT";
-    const interval = req.query.interval || "15m";
+    const interval = req.query.interval || "15";
     const limit = req.query.limit || "200";
-    const tf = String(interval).match(/^\d+$/) ? interval + "m" : interval;
-const r = await axios.get("https://api.binance.com/api/v3/klines", {
-      params: { symbol, interval: tf, limit }
+    
+    const r = await axios.get("https://min-api.cryptocompare.com/data/v2/histominute", {
+      params: {
+        fsym: "BTC",
+        tsym: "USDT",
+        limit: limit,
+        aggregate: interval
+      }
     });
     res.json(r.data);
   } catch (e) { res.status(500).json({ error: e.message }); }
